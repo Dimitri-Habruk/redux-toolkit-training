@@ -1,11 +1,19 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { addTodo } from '../features/todo/todoSlice'
 
 const Form = () => {
+
+    const dispatch = useDispatch()
+
     return (
         <form className='w-full flex' onSubmit={(e) => e.preventDefault()}>
             <input
                 type='text'
                 placeholder='Type something...'
+                onChange={(e)=>{
+                    dispatch((state)=>state.addTodo.todos)
+                }}
                 className='w-full p-1 focus:outline-none focus:border-lime-500 focus: border-2 placeholder:text-sm'
             />
             <button
