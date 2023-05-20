@@ -23,11 +23,11 @@ const TodoItem = ({todo}) => {
             <div className={`text-sm ${todo.completed ? 'line-through font-medium text-lime-400' : ''}`}>
                 {todo.text}
             </div>
-            <div className='text-sm px-4 py-2 flex bg-red-400 hover:bg-red-500 transition-all text-white 
+            <button className='text-sm px-4 py-2 flex bg-red-400 hover:bg-red-500 transition-all text-white 
             cursor-pointer'
             onClick={()=>removeTodoHandler(todo.id)}>
                 Delete
-            </div>
+            </button>
         </div>
     )
 }

@@ -15,11 +15,7 @@ export const userSlice = createSlice({
         setLastName:(state,action) =>{
             state.lastName = action.payload
         }
-        
-
     }
-
-
 })
 
 export const { setFirstName, setLastName } = userSlice.actions
