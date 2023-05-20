@@ -26,7 +26,7 @@ export const postSlice = createSlice({
     extraReducers: {
         [getPosts.fulfilled]: () => console.log('fullfiled'),
         [getPosts.rejected]: () => console.log('pending'),
-        [getPosts.rejected]:()=>console.log('rejected')
+        [getPosts.rejected]:()=>console.log('rejected') 
     }
 })
 
