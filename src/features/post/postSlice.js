@@ -1,35 +1,51 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-import axios from 'axios'
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
-    posts: []
-}
+  posts: [],
+};
 
 export const getPosts = createAsyncThunk(
-    'posts/getPosts',
-    async (_, {rejectWithValue, dispatch })=>{
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
-        dispatch(setPosts(response.data))
-    }
-)
+  "posts/getPosts",
+  async (_, { rejectWithValue, dispatch }) => {
+    const response = await axios.get(
+      "https://jsonplaceholder.typicode.com/posts"
+    );
+    dispatch(setPosts(response.data));
+  }
+);
+
+export const deletePostById = createAsyncThunk(
+  "posts/deletePostById",
+  async (id, { rejectWithValue, dispatch }) => {
+    await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+    dispatch(deletePost(id));
+  }
+);
 
 export const postSlice = createSlice({
-    name: 'posts',
-    initialState,
+  name: "posts",
+  initialState,
 
-    reducers: {
-        setPosts:(state,action) =>{
-            state.posts = action.payload
-        }
+  reducers: {
+    setPosts: (state, action) => {
+      state.posts = action.payload;
     },
-    
-    extraReducers: {
-        [getPosts.fulfilled]: () => console.log('fullfiled'),
-        [getPosts.rejected]: () => console.log('pending'),
-        [getPosts.rejected]:()=>console.log('rejected') 
-    }
-})
+    deletePost: (state, action) => {
+      state.posts = state.posts.filter((post) => post.id !== action.payload);
+    },
+  },
 
-export const {setPosts} = postSlice.actions
+  extraReducers: {
+    [getPosts.fulfilled]: () => console.log("getPosts : fullfiled"),
+    [getPosts.pending]: () => console.log("getPosts : pending"),
+    [getPosts.rejected]: () => console.log("getPosts : rejected"),
+    [deletePostById.fulfilled]: () => console.log("deletePostById : fullfiled"),
+    [deletePostById.pending]: () => console.log("deletePostById : pending"),
+    [deletePostById.rejected]: () => console.log("deletePostById : rejected"),
+  },
+});
 
-export default postSlice.reducer
+export const { setPosts, deletePost } = postSlice.actions;
+
+export default postSlice.reducer;
